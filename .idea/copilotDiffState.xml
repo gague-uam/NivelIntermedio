@@ -3,15 +3,6 @@
   <component name="CopilotDiffPersistence">
     <option name="pendingDiffs">
       <map>
-        <entry key="$PROJECT_DIR$/src/dao/DaoUsuario.java">
-          <value>
-            <PendingDiffInfo>
-              <option name="filePath" value="$PROJECT_DIR$/src/dao/DaoUsuario.java" />
-              <option name="originalContent" value="package dao;&#10;&#10;import model.Usuario;&#10;&#10;import java.util.List;&#10;import java.util.Map;&#10;&#10;public class DaoUsuario {&#10;    private Map&lt;String, Usuario&gt; usuarios;&#10;&#10;    public boolean agregarUsuario(Usuario usuario) {&#10;        if (usuarios.containsKey(usuario.getEmail())) {&#10;            return false; // Usuario ya existe&#10;        }&#10;        usuarios.put(usuario.getEmail(), usuario);&#10;        return true;&#10;    }&#10;&#10;    public List&lt;Usuario&gt; getUsuarios_Alfabetico() {&#10;        return usuarios.values().stream()&#10;                .sorted((u1, u2) -&gt; u1.getNombre().compareToIgnoreCase(u2.getNombre()))&#10;                .toList();&#10;    }&#10;&#10;    public List&lt;Usuario&gt; filtrarTipoUsuario(String tipoUsuario) {&#10;        return usuarios.values().stream()&#10;                .filter(u -&gt; u.getClass().getSimpleName().equalsIgnoreCase(tipoUsuario))&#10;                .toList();&#10;    }&#10;}&#10;" />
-              <option name="updatedContent" value="package dao;&#10;&#10;import model.Usuario;&#10;&#10;import java.util.*;&#10;import java.util.stream.Collectors;&#10;&#10;public class DaoUsuario {&#10;    // Map clave: id del usuario&#10;    private Map&lt;Integer, Usuario&gt; usuarios = new HashMap&lt;&gt;();&#10;&#10;    // Agrega usuario si el id no existe&#10;    public boolean agregarUsuario(Usuario usuario) {&#10;        if (usuarios.containsKey(usuario.getId())) {&#10;            return false; // id duplicado&#10;        }&#10;        usuarios.put(usuario.getId(), usuario);&#10;        return true;&#10;    }&#10;&#10;    // Lista usuarios ordenados alfabéticamente por nombre (ignorando mayúsculas)&#10;    public List&lt;Usuario&gt; getUsuariosAlfabetico() {&#10;        return usuarios.values().stream()&#10;                .sorted(Comparator.comparing(u -&gt; u.getNombre().toLowerCase(Locale.ROOT)))&#10;                .collect(Collectors.toList());&#10;    }&#10;&#10;    // Cantidad de usuarios por tipo (Administrador, Editor, Lector)&#10;    public Map&lt;String, Long&gt; getReportePorTipo() {&#10;        return usuarios.values().stream()&#10;                .collect(Collectors.groupingBy(u -&gt; u.getClass().getSimpleName(), Collectors.counting()));&#10;    }&#10;&#10;    // Devuelve todos (por si se requiere en otro lugar)&#10;    public Collection&lt;Usuario&gt; getTodos() {&#10;        return usuarios.values();&#10;    }&#10;}" />
-            </PendingDiffInfo>
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/src/model/Lector.java">
           <value>
             <PendingDiffInfo>
