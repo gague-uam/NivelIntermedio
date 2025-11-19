@@ -1,11 +1,14 @@
 package model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Lector extends Usuario {
-    private String temasFavoritos;
-    public String getTemasFavoritos() {
+    private Set<String> temasFavoritos = new HashSet<>();
+    public Set<String> getTemasFavoritos() {
         return temasFavoritos;
     }
-    public void setTemasFavoritos(String temasFavoritos) {
+    public void setTemasFavoritos(Set<String> temasFavoritos) {
         this.temasFavoritos = temasFavoritos;
     }
 

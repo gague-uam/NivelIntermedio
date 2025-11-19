@@ -2,29 +2,37 @@ package dao;
 
 import model.Usuario;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DaoUsuario {
-    private Map<String, Usuario> usuarios;
+    // Map clave: id del usuario
+    private Map<Integer, Usuario> usuarios = new HashMap<>();
 
+    // Agrega usuario si el id no existe
     public boolean agregarUsuario(Usuario usuario) {
-        if (usuarios.containsKey(usuario.getEmail())) {
-            return false; // Usuario ya existe
+        if (usuarios.containsKey(usuario.getId())) {
+            return false; // id duplicado
         }
-        usuarios.put(usuario.getEmail(), usuario);
+        usuarios.put(usuario.getId(), usuario);
         return true;
     }
 
-    public List<Usuario> getUsuarios_Alfabetico() {
+    // Lista usuarios ordenados alfabéticamente por nombre (ignorando mayúsculas)
+    public List<Usuario> getUsuariosAlfabetico() {
         return usuarios.values().stream()
-                .sorted((u1, u2) -> u1.getNombre().compareToIgnoreCase(u2.getNombre()))
-                .toList();
+                .sorted(Comparator.comparing(u -> u.getNombre().toLowerCase(Locale.ROOT)))
+                .collect(Collectors.toList());
     }
 
-    public List<Usuario> filtrarTipoUsuario(String tipoUsuario) {
+    // Cantidad de usuarios por tipo (Administrador, Editor, Lector)
+    public Map<String, Long> getReportePorTipo() {
         return usuarios.values().stream()
-                .filter(u -> u.getClass().getSimpleName().equalsIgnoreCase(tipoUsuario))
-                .toList();
+                .collect(Collectors.groupingBy(u -> u.getClass().getSimpleName(), Collectors.counting()));
+    }
+
+    // Devuelve todos (por si se requiere en otro lugar)
+    public Collection<Usuario> getTodos() {
+        return usuarios.values();
     }
 }
